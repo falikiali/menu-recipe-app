@@ -50,8 +50,8 @@ class ImplMenuUseCase @Inject constructor(private val menuRepository: MenuReposi
         return menuRepository.removeFromBookmark(menu)
     }
 
-    override fun getAllMenu(): Flow<List<Menu>> {
-        return menuRepository.getAllMenu()
+    override fun getAllBookmarkMenu(): Flow<List<Menu>> {
+        return menuRepository.getAllBookmarkMenu()
     }
 
     override fun checkBookmarkedMenu(id: String): Flow<Boolean> {

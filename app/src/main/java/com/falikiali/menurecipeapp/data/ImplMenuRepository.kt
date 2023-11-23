@@ -133,8 +133,8 @@ class ImplMenuRepository @Inject constructor(private val apiService: ApiService,
         menuDao.removeFromBookmark(menu.toEntity())
     }
 
-    override fun getAllMenu(): Flow<List<Menu>> {
-        return menuDao.getAll().map { list ->
+    override fun getAllBookmarkMenu(): Flow<List<Menu>> {
+        return menuDao.getAllBookmarkMenu().map { list ->
             list.map { menu ->
                 menu.toDomain()
             }

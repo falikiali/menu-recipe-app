@@ -24,7 +24,7 @@ interface MenuRepository {
      */
     suspend fun addToBookmark(menu: Menu)
     suspend fun removeFromBookmark(menu: Menu)
-    fun getAllMenu(): Flow<List<Menu>>
+    fun getAllBookmarkMenu(): Flow<List<Menu>>
     fun checkBookmarkedMenu(id: String): Flow<Boolean>
 
 }

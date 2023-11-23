@@ -3,7 +3,6 @@ package com.falikiali.menurecipeapp.presentation.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible

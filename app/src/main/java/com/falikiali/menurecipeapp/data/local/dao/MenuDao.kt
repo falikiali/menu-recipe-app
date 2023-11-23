@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface MenuDao {
 
     @Query("SELECT * FROM menus")
-    fun getAll(): Flow<List<MenuEntity>>
+    fun getAllBookmarkMenu(): Flow<List<MenuEntity>>
 
     @Query("SELECT EXISTS(SELECT * FROM menus WHERE id = :id)")
     fun checkMarkedMenu(id: String): Flow<Boolean>

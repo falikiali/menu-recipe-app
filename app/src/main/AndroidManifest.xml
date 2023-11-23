@@ -16,6 +16,11 @@
         android:theme="@style/Theme.MenuRecipeApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.bookmark.BookmarkActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MenuRecipeApp.ActionBar" />
+        <activity
             android:name=".presentation.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -25,11 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.bookmark.BookmarkActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MenuRecipeApp.ActionBar" />
         <activity
             android:name=".presentation.recipe.RecipeActivity"
             android:exported="false"
