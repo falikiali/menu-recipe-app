@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MenuRecipeApp</string>
+    <string name="hungry">Make your own food,\nalways <font color="#D18C35">Hungry!</font></string>
+</resources>
