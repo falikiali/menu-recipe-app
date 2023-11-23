@@ -26,6 +26,6 @@ interface ApiService {
     suspend fun getRecipe(@Query("i") i: Int): Response<RecipeResponse>
 
     @GET("search.php")
-    suspend fun searchMenu(@Query("S") s: String): Response<MenusResponse>
+    suspend fun searchMenu(@Query("s") s: String): Response<MenusResponse>
 
 }
