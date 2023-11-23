@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.falikiali.menurecipeapp.databinding.LayoutListMenuBinding
 import com.falikiali.menurecipeapp.domain.model.Menu
 
-class MenuAdapter: ListAdapter<Menu, MenuAdapter.ViewHolder>(DIFF_CALLBACK) {
+class MenuAdapter(val onItemClick: (Menu) -> Unit): ListAdapter<Menu, MenuAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Menu>() {
@@ -34,6 +34,8 @@ class MenuAdapter: ListAdapter<Menu, MenuAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     inner class ViewHolder(private val binding: LayoutListMenuBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Menu) {
+            itemView.setOnClickListener { onItemClick(data) }
+
             with(binding) {
                 tvMenuName.text = data.name
             }

@@ -28,11 +28,13 @@
         <activity
             android:name=".presentation.bookmark.BookmarkActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MenuRecipeApp.ActionBar" />
         <activity
             android:name=".presentation.recipe.RecipeActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MenuRecipeApp.ActionBar" />
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="false"

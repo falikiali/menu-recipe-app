@@ -34,7 +34,7 @@ class ImplMenuUseCase @Inject constructor(private val menuRepository: MenuReposi
         return menuRepository.searchMenu(search)
     }
 
-    override suspend fun getRecipe(id: Int): Flow<ResultState<Recipe>> {
+    override suspend fun getRecipe(id: String): Flow<ResultState<Recipe>> {
         return menuRepository.getRecipe(id)
     }
 

@@ -106,13 +106,13 @@ class ImplMenuRepository @Inject constructor(private val apiService: ApiService,
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getRecipe(id: Int): Flow<ResultState<Recipe>> {
+    override suspend fun getRecipe(id: String): Flow<ResultState<Recipe>> {
         return flow {
             emit(ResultState.Loading)
             try {
                 val response = apiService.getRecipe(id)
-                val data = response.body()?.toDomain()
-                emit(ResultState.Success(data!!))
+                val data = response.body()?.meals!![0].toDomain()
+                emit(ResultState.Success(data))
             } catch (e: HttpException) {
                 emit(ResultState.Failed(e.message.toString(), 0))
             } catch (e: Throwable) {

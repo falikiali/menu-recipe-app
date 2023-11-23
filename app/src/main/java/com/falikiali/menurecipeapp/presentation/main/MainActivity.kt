@@ -3,6 +3,7 @@ package com.falikiali.menurecipeapp.presentation.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.falikiali.menurecipeapp.databinding.ActivityMainBinding
 import com.falikiali.menurecipeapp.helper.ResultState
 import com.falikiali.menurecipeapp.presentation.bookmark.BookmarkActivity
+import com.falikiali.menurecipeapp.presentation.recipe.RecipeActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -103,7 +105,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRvMenu() {
-        menuAdapter = MenuAdapter()
+        menuAdapter = MenuAdapter(onItemClick = {
+            val i = Intent(this@MainActivity, RecipeActivity::class.java).apply {
+                putExtra(RecipeActivity.ID_MENU, it.id)
+            }
+            startActivity(i)
+        })
+
         with(binding.rvMenu) {
             layoutManager = GridLayoutManager(this@MainActivity, 2)
             adapter = menuAdapter

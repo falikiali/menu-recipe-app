@@ -17,7 +17,7 @@ interface MenuUseCase {
     suspend fun getMenusByCategory(category: String): Flow<ResultState<List<Menu>>>
     suspend fun getMenusByArea(area: String): Flow<ResultState<List<Menu>>>
     suspend fun searchMenu(search: String): Flow<ResultState<List<Menu>>>
-    suspend fun getRecipe(id: Int): Flow<ResultState<Recipe>>
+    suspend fun getRecipe(id: String): Flow<ResultState<Recipe>>
 
     /**
      * Local
