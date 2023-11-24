@@ -1,6 +1,7 @@
 package com.falikiali.menurecipeapp.presentation.recipe
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -34,7 +35,6 @@ class RecipeActivity : AppCompatActivity() {
         observeRecipeBookmark()
         observeBookmark()
         actionBtnRetry()
-        actionBtnYoutube()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -80,6 +80,7 @@ class RecipeActivity : AppCompatActivity() {
                     .into(binding.ivThumbnail)
 
                 checkRecipe()
+                actionBtnYoutube(it.data.youtube)
                 actionBtnBookmark(
                     Menu(
                         it.data.id,
@@ -119,9 +120,10 @@ class RecipeActivity : AppCompatActivity() {
         }
     }
 
-    private fun actionBtnYoutube() {
+    private fun actionBtnYoutube(url: String) {
+        val uri = Uri.parse(url)
         binding.btnYoutube.setOnClickListener {
-            val i = Intent(this@RecipeActivity, BookmarkActivity::class.java)
+            val i = Intent(Intent.ACTION_VIEW, uri)
             startActivity(i)
         }
     }

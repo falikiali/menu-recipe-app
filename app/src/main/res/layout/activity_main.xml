@@ -65,16 +65,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hungry"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:paddingHorizontal="12dp"
+        android:text="Category"
+        android:maxLines="1"
+        android:textColor="@color/primary"
+        app:backgroundTint="@color/white"
+        app:strokeColor="@color/primary"
+        app:strokeWidth="2dp"
+        app:cornerRadius="12dp"
+        app:icon="@drawable/ic_filter"
+        app:iconTint="@color/primary"
+        app:iconPadding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rv_filter"
+        app:layout_constraintTop_toBottomOf="@+id/sv_search"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_filter"
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_filter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sv_search"
         tools:listitem="@layout/layout_list_filter" />

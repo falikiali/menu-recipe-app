@@ -21,45 +21,71 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel: MainViewModel by viewModels()
 
-    private lateinit var filterAdapter: FilterAdapter
+    private lateinit var filterCategoryAdapter: FilterCategoryAdapter
+    private lateinit var filterAreaAdapter: FilterAreaAdapter
     private lateinit var menuAdapter: MenuAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        getCategories()
-        getFirstMenu()
+        initData()
         observeCategories()
-        observeMenuByCategory()
-        observeSearchMenu()
-        initRvFilter()
-        initRvMenu()
+        observeAreas()
+        observeMenus()
         searchMenu()
         actionBtnBookmark()
         actionBtnRetry()
     }
 
-    private fun getCategories() {
-        viewModel.getCategories()
-    }
-
-    private fun getFirstMenu() {
-        viewModel.getMenuByCategory("Beef")
+    private fun initData() {
+        observeFilter()
+        initRvMenu()
     }
 
     private fun observeCategories() {
         viewModel.categoriesState.observe(this@MainActivity) {
             if (it is ResultState.Success) {
                 binding.rvFilter.scrollToPosition(0)
-                filterAdapter.submitList(it.data)
+                filterCategoryAdapter.submitList(it.data)
+                actionBtnFilter()
             } else if (it is ResultState.Failed) {
-                showSnackbar(it.error)
+                showSnackBar(it.error)
             }
         }
     }
 
-    private fun observeMenuByCategory() {
-        viewModel.menuByCategoryState.observe(this@MainActivity) {
+    private fun observeAreas() {
+        viewModel.areasState.observe(this@MainActivity) {
+            if (it is ResultState.Success) {
+                binding.rvFilter.scrollToPosition(0)
+                filterAreaAdapter.submitList(it.data)
+                actionBtnFilter()
+            } else if (it is ResultState.Failed) {
+                showSnackBar(it.error)
+            }
+        }
+    }
+
+    private fun observeFilter() {
+        viewModel.filterCategoryState.observe(this@MainActivity) {
+            if (it) {
+                viewModel.getCategories()
+                viewModel.getMenuByCategory("Beef")
+                initRvFilterCategory()
+
+                binding.btnFilter.text = "Category"
+            } else {
+                viewModel.getAreas()
+                viewModel.getMenuByArea("American")
+                initRvFilterArea()
+
+                binding.btnFilter.text = "Area"
+            }
+        }
+    }
+
+    private fun observeMenus() {
+        viewModel.menuState.observe(this@MainActivity) {
             with(binding) {
                 progressBar.isVisible = it is ResultState.Loading
                 rvMenu.isVisible = it is ResultState.Success
@@ -70,36 +96,30 @@ class MainActivity : AppCompatActivity() {
                 binding.rvMenu.scrollToPosition(0)
                 menuAdapter.submitList(it.data)
             } else if (it is ResultState.Failed) {
-                showSnackbar(it.error)
+                showSnackBar(it.error)
             }
         }
     }
 
-    private fun observeSearchMenu() {
-        viewModel.searchState.observe(this@MainActivity) {
-            with(binding) {
-                progressBar.isVisible = it is ResultState.Loading
-                rvMenu.isVisible = it is ResultState.Success
-                btnRetry.isVisible = it is ResultState.Failed
-            }
-
-            if (it is ResultState.Success) {
-                binding.rvMenu.scrollToPosition(0)
-                menuAdapter.submitList(it.data)
-            } else if (it is ResultState.Failed) {
-                showSnackbar(it.error)
-            }
-        }
-    }
-
-    private fun initRvFilter() {
-        filterAdapter = FilterAdapter(onItemClick = {
+    private fun initRvFilterCategory() {
+        filterCategoryAdapter = FilterCategoryAdapter(onItemClick = {
             viewModel.getMenuByCategory(it.name)
         })
 
         with(binding.rvFilter) {
             layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = filterAdapter
+            adapter = filterCategoryAdapter
+        }
+    }
+
+    private fun initRvFilterArea() {
+        filterAreaAdapter = FilterAreaAdapter(onItemClick = {
+            viewModel.getMenuByArea(it.name)
+        })
+
+        with(binding.rvFilter) {
+            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = filterAreaAdapter
         }
     }
 
@@ -141,14 +161,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun actionBtnRetry() {
-        binding.btnRetry.setOnClickListener {
-            getCategories()
-            getFirstMenu()
+    private fun actionBtnFilter() {
+        binding.btnFilter.setOnClickListener {
+            viewModel.updateFilter()
         }
     }
 
-    private fun showSnackbar(message: String) {
+    private fun actionBtnRetry() {
+        binding.btnRetry.setOnClickListener {
+            initData()
+        }
+    }
+
+    private fun showSnackBar(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
